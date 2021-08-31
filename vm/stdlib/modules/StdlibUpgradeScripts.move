@@ -70,7 +70,7 @@ module StdlibUpgradeScripts {
         }
 
         public fun do_upgrade_from_v6_to_v7(sender: &signer) {
-            let language_version = 2;
+            let language_version = 3;
             // initialize the language version config.
             Config::publish_new_config(sender, LanguageVersion::new(language_version));
             // use STC Dao to upgrade onchain's move-language-version configuration.

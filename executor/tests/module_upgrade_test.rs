@@ -21,7 +21,6 @@ use starcoin_vm_types::on_chain_config::{MoveLanguageVersion, TransactionPublish
 use starcoin_vm_types::on_chain_resource::LinearWithdrawCapability;
 use starcoin_vm_types::token::stc::STC_TOKEN_CODE;
 use starcoin_vm_types::transaction::{Package, TransactionPayload};
-use starcoin_vm_types::values::VMValueCast;
 use statedb::ChainStateDB;
 use std::convert::TryInto;
 use std::fs::File;
@@ -629,5 +628,5 @@ fn read_foo(state_view: &dyn StateView) -> u8 {
     )
     .unwrap();
     assert_eq!(ret.len(), 1);
-    ret.pop().unwrap().1.cast().unwrap()
+    bcs_ext::from_bytes(ret.pop().unwrap().as_slice()).unwrap()
 }

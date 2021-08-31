@@ -11,7 +11,7 @@ use rayon::prelude::*;
 use sha2::{Digest, Sha256};
 use starcoin_crypto::hash::PlainCryptoHash;
 use starcoin_crypto::HashValue;
-use starcoin_move_compiler::{compiled_unit::CompiledUnit, move_compile_and_report};
+use starcoin_move_compiler::compiled_unit::CompiledUnit;
 use starcoin_vm_types::access::ModuleAccess;
 use starcoin_vm_types::bytecode_verifier::{dependencies, verify_module};
 use starcoin_vm_types::file_format::CompiledModule;
@@ -26,11 +26,10 @@ use std::{
 };
 mod compat;
 pub use compat::*;
-use starcoin_move_compiler::shared::Flags;
 pub use starcoin_move_compiler::utils::iterate_directory;
+use starcoin_move_compiler::Compiler;
 
 pub const STD_LIB_DIR: &str = "modules";
-pub const MOVE_EXTENSION: &str = starcoin_move_compiler::MOVE_EXTENSION;
 
 pub const NO_USE_COMPILED: &str = "MOVE_NO_USE_COMPILED";
 
@@ -41,7 +40,8 @@ pub const LATEST_COMPILED_OUTPUT_PATH: &str = "compiled/latest";
 /// The output path for the compiled stdlib
 pub const STDLIB_DIR_NAME: &str = "stdlib";
 /// The extension for compiled files
-pub const COMPILED_EXTENSION: &str = starcoin_move_compiler::MOVE_COMPILED_EXTENSION;
+pub const COMPILED_EXTENSION: &str =
+    starcoin_move_compiler::move_command_line_common::files::MOVE_COMPILED_EXTENSION;
 
 /// The output path for stdlib documentation.
 pub const STD_LIB_DOC_DIR: &str = "modules/doc";
@@ -178,8 +178,9 @@ pub(crate) fn stdlib_files() -> Vec<String> {
 }
 
 pub fn build_stdlib() -> BTreeMap<String, CompiledModule> {
-    let (_, compiled_units) =
-        move_compile_and_report(&stdlib_files(), &[], None, Flags::empty()).unwrap();
+    let (_, compiled_units) = Compiler::new(&stdlib_files(), &[])
+        .build_and_report()
+        .unwrap();
     let mut modules = BTreeMap::new();
     for (i, compiled_unit) in compiled_units.into_iter().enumerate() {
         let name = compiled_unit.name();
