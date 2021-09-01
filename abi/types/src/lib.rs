@@ -200,12 +200,14 @@ pub struct TypeArgumentABI {
     /// The name of the argument.
     name: String,
     abilities: WrappedAbilitySet,
+    phantom: bool,
 }
 impl TypeArgumentABI {
-    pub fn new(name: String, abilities: AbilitySet) -> Self {
+    pub fn new(name: String, abilities: AbilitySet, phantom: bool) -> Self {
         Self {
             name,
             abilities: WrappedAbilitySet(abilities),
+            phantom,
         }
     }
 
@@ -214,6 +216,9 @@ impl TypeArgumentABI {
     }
     pub fn ability_set(&self) -> AbilitySet {
         self.abilities.0
+    }
+    pub fn is_phantom(&self) -> bool {
+        self.phantom
     }
 }
 

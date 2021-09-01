@@ -3,6 +3,7 @@
 
 use anyhow::anyhow;
 use anyhow::Result;
+use move_model::script_into_module;
 use starcoin_abi_types::{
     ArgumentABI, FieldABI, ModuleABI, ScriptFunctionABI, StructABI, TransactionScriptABI, TypeABI,
     TypeArgumentABI,
@@ -70,7 +71,8 @@ impl<'a> ABIResolver<'a> {
 
     pub fn resolve_script(&self, script_code: Vec<u8>) -> Result<TransactionScriptABI> {
         let script = CompiledScript::deserialize(&script_code)?;
-        let script_mod = script.into_module().1;
+        let script_mod = script_into_module(script);
+
         let m = Module::new(&script_mod);
         anyhow::ensure!(
             m.exposed_functions.len() == 1,
@@ -224,7 +226,7 @@ impl<'a> ABIResolver<'a> {
             .type_parameters
             .iter()
             .enumerate()
-            .map(|(i, ab)| TypeArgumentABI::new(format!("T{}", i), *ab))
+            .map(|(i, ab)| TypeArgumentABI::new(format!("T{}", i), ab.constraints, ab.is_phantom))
             .collect();
         let abi = StructABI::new(
             name.to_string(),
@@ -247,7 +249,7 @@ impl<'a> ABIResolver<'a> {
             .type_parameters
             .iter()
             .enumerate()
-            .map(|(i, ab)| TypeArgumentABI::new(format!("T{}", i), *ab))
+            .map(|(i, ab)| TypeArgumentABI::new(format!("T{}", i), *ab, false))
             .collect();
         let parameters = func
             .parameters

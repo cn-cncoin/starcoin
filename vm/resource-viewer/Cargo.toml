@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 starcoin-vm-types = { path = "../types" }
-move-binary-format = {git = "https://github.com/starcoinorg/diem", rev="9cf472607f028c90c3deab12bf4757466039fcba" }
+move-binary-format = {git = "https://github.com/starcoinorg/diem", rev="26d5d426166f1c402cd0f275dcdbba3993596b26"  }
 serde_json = "1.0"
 serde = { version = "1.0.129", features = ["derive", "rc"] }
 anyhow = "1.0.41"
