@@ -77,7 +77,8 @@ impl Default for StarcoinVM {
 
 impl StarcoinVM {
     pub fn new() -> Self {
-        let inner = MoveVMAdapter::new();
+        let inner = MoveVMAdapter::new(super::natives::starcoin_natives())
+            .expect("should be able to create Move VM; check if there are duplicated natives");
         Self {
             move_vm: Arc::new(inner),
             vm_config: None,
@@ -417,7 +418,6 @@ impl StarcoinVM {
                             only_new_module,
                             enforced,
                         )?;
-
                         session
                             .verify_module(module.code())
                             .map_err(|e| e.into_vm_status())?;

@@ -1,10 +1,14 @@
-use diem_types::account_config::CORE_CODE_ADDRESS;
 use move_stdlib::natives::{bcs, event, hash, signer, vector};
 use move_vm_runtime::native_functions::{NativeFunction, NativeFunctionTable};
+use starcoin_natives::{account, signature};
 use starcoin_vm_types::identifier::Identifier;
 use starcoin_vm_types::language_storage::CORE_CODE_ADDRESS;
 
-pub fn diem_natives() -> NativeFunctionTable {
+/// The function returns all native functions supported by Starcoin.
+/// NOTICE:
+/// - mostly re-use natives defined in move-stdlib.
+/// - be careful with the native cost table index used in the implementation
+pub fn starcoin_natives() -> NativeFunctionTable {
     const NATIVES: &[(&str, &str, NativeFunction)] = &[
         ("Hash", "sha2_256", hash::native_sha2_256),
         ("Hash", "sha3_256", hash::native_sha3_256),
@@ -50,6 +54,7 @@ pub fn diem_natives() -> NativeFunctionTable {
             "name_of",
             starcoin_natives::token::native_token_name_of,
         ),
+        // FIXME
         #[cfg(feature = "testing")]
         ("Debug", "print", move_stdlib::natives::debug::native_print),
         #[cfg(feature = "testing")]

@@ -1,10 +1,11 @@
 use move_binary_format::errors::PartialVMResult;
 use move_core_types::language_storage::TypeTag;
 use move_core_types::vm_status::sub_status::NFE_TOKEN_INVALID_TYPE_ARG_FAILURE;
+use move_vm_runtime::native_functions::NativeContext;
 use move_vm_types::{
     gas_schedule::NativeCostIndex,
     loaded_data::runtime_types::Type,
-    natives::function::{native_gas, NativeContext, NativeResult},
+    natives::function::{native_gas, NativeResult},
     values::Value,
 };
 use smallvec::smallvec;
@@ -12,7 +13,7 @@ use std::collections::VecDeque;
 
 /// Return Token types ModuleAddress, ModuleName and StructName
 pub fn native_token_name_of(
-    context: &mut impl NativeContext,
+    context: &mut NativeContext,
     ty_args: Vec<Type>,
     arguments: VecDeque<Value>,
 ) -> PartialVMResult<NativeResult> {

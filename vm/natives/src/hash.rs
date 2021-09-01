@@ -7,8 +7,6 @@ use move_vm_types::{
     pop_arg,
     values::Value,
 };
-use sha2::{Digest, Sha256};
-use sha3::Sha3_256;
 use smallvec::smallvec;
 use std::collections::VecDeque;
 use tiny_keccak::Hasher;
