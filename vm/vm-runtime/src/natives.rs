@@ -1,4 +1,4 @@
-use move_stdlib::natives::{bcs, event, hash, signer, unit_test, vector};
+use move_stdlib::natives::{bcs, event, hash, signer, vector};
 use move_vm_runtime::native_functions::{NativeFunction, NativeFunctionTable};
 use starcoin_natives::{account, debug, signature};
 use starcoin_vm_types::identifier::Identifier;
@@ -64,7 +64,7 @@ pub fn starcoin_natives() -> NativeFunctionTable {
         (
             "UnitTest",
             "create_signers_for_testing",
-            unit_test::native_create_signers_for_testing,
+            move_stdlib::natives::unit_test::native_create_signers_for_testing,
         ),
     ];
     NATIVES

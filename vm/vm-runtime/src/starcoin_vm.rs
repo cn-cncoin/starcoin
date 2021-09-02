@@ -10,13 +10,11 @@ use crate::metrics::{BLOCK_UNCLES, TXN_EXECUTION_GAS_USAGE};
 use anyhow::{format_err, Error, Result};
 use crypto::HashValue;
 use move_vm_runtime::data_cache::MoveStorage;
-use move_vm_runtime::move_arg_validator::MoveArgValidator;
 use move_vm_runtime::move_vm::MoveVM;
 use move_vm_runtime::move_vm_adapter::{PublishModuleBundleOption, SessionAdapter};
 use move_vm_runtime::session::Session;
 use starcoin_config::INITIAL_GAS_SCHEDULE;
 use starcoin_logger::prelude::*;
-use starcoin_move_compiler::check_module_compat;
 use starcoin_types::account_config::config_change::ConfigChangeEvent;
 use starcoin_types::account_config::{
     access_path_for_module_upgrade_strategy, access_path_for_two_phase_upgrade_v2,
@@ -30,7 +28,6 @@ use starcoin_types::{
     },
     write_set::WriteSet,
 };
-use starcoin_vm_types::access::ModuleAccess;
 use starcoin_vm_types::account_address::AccountAddress;
 use starcoin_vm_types::account_config::upgrade::UpgradeEvent;
 use starcoin_vm_types::account_config::{
@@ -38,19 +35,18 @@ use starcoin_vm_types::account_config::{
     EPILOGUE_V2_NAME, PROLOGUE_NAME,
 };
 use starcoin_vm_types::contract_event::ContractEvent;
-use starcoin_vm_types::file_format::CompiledModule;
 use starcoin_vm_types::gas_schedule::{zero_cost_schedule, GasStatus};
 use starcoin_vm_types::genesis_config::StdlibVersion;
 use starcoin_vm_types::identifier::IdentStr;
 use starcoin_vm_types::language_storage::ModuleId;
-use starcoin_vm_types::transaction::{DryRunTransaction, Module, Package, TransactionPayloadType};
+use starcoin_vm_types::transaction::{DryRunTransaction, Package, TransactionPayloadType};
 use starcoin_vm_types::transaction_metadata::TransactionPayloadMetadata;
 use starcoin_vm_types::value::{serialize_values, MoveValue};
 use starcoin_vm_types::vm_status::KeptVMStatus;
 use starcoin_vm_types::write_set::{WriteOp, WriteSetMut};
 use starcoin_vm_types::{
     effects::{ChangeSet as MoveChangeSet, Event as MoveEvent},
-    errors::{self, IndexKind, Location},
+    errors::Location,
     event::EventKey,
     gas_schedule::{self, CostTable, GasAlgebra, GasCarrier, GasUnits, InternalGasUnits},
     language_storage::TypeTag,
@@ -234,7 +230,7 @@ impl StarcoinVM {
                         }
                         Ok(only_new_module) => only_new_module,
                     };
-                session
+                let _ = session
                     .verify_module_bundle(
                         package
                             .modules()
@@ -251,7 +247,7 @@ impl StarcoinVM {
                     .map_err(|e| e.into_vm_status())?;
             }
             TransactionPayload::Script(s) => {
-                MoveArgValidator::new(&mut session)
+                session
                     .verify_script_args(
                         s.code().to_vec(),
                         s.ty_args().to_vec(),
@@ -261,7 +257,7 @@ impl StarcoinVM {
                     .map_err(|e| e.into_vm_status())?;
             }
             TransactionPayload::ScriptFunction(s) => {
-                MoveArgValidator::new(&mut session)
+                session
                     .verify_script_function_args(
                         s.module(),
                         s.function(),
@@ -299,49 +295,6 @@ impl StarcoinVM {
                 }
             }
         }
-    }
-
-    fn check_compatibility_if_exist<R: MoveStorage>(
-        &self,
-        session: &Session<R>,
-        module: &Module,
-        only_new_module: bool,
-        enforced: bool,
-    ) -> Result<(), VMStatus> {
-        let compiled_module = match CompiledModule::deserialize(module.code()) {
-            Ok(module) => module,
-            Err(err) => {
-                warn!("[VM] module deserialization failed {:?}", err);
-                return Err(err.finish(Location::Undefined).into_vm_status());
-            }
-        };
-
-        let module_id = compiled_module.self_id();
-        if session
-            .exists_module(&module_id)
-            .map_err(|e| e.into_vm_status())?
-        {
-            if only_new_module {
-                warn!("only new module for {:?}", module_id);
-                return Err(VMStatus::Error(StatusCode::INVALID_MODULE_PUBLISHER));
-            }
-            let pre_version = session
-                .load_module(&module_id)
-                .map_err(|e| e.into_vm_status())?;
-            let compatible = check_module_compat(pre_version.as_slice(), module.code())
-                .map_err(|e| e.into_vm_status())?;
-            if !compatible && !enforced {
-                warn!("Check module compat error: {:?}", module_id);
-                return Err(errors::verification_error(
-                    StatusCode::BACKWARD_INCOMPATIBLE_MODULE_UPDATE,
-                    IndexKind::ModuleHandle,
-                    compiled_module.self_handle_idx().0,
-                )
-                .finish(Location::Undefined)
-                .into_vm_status());
-            }
-        }
-        Ok(())
     }
 
     fn only_new_module_strategy(
@@ -399,47 +352,31 @@ impl StarcoinVM {
                 Ok(is_enforced) => is_enforced,
                 _ => false,
             };
-            match Self::only_new_module_strategy(remote_cache, package_address) {
-                Err(e) => {
-                    warn!("[VM]Update module strategy deserialize err : {:?}", e);
-                    return Err(VMStatus::Error(StatusCode::FAILED_TO_DESERIALIZE_RESOURCE));
-                }
-                Ok(only_new_module) => {
-                    for module in package.modules() {
-                        let compiled_module = match CompiledModule::deserialize(module.code()) {
-                            Ok(module) => module,
-                            Err(err) => {
-                                warn!("[VM] module deserialization failed {:?}", err);
-                                return Err(err.finish(Location::Undefined).into_vm_status());
-                            }
-                        };
-
-                        let module_id = compiled_module.self_id();
-                        if module_id.address() != &package_address {
-                            return Err(errors::verification_error(
-                                StatusCode::MODULE_ADDRESS_DOES_NOT_MATCH_SENDER,
-                                IndexKind::AddressIdentifier,
-                                compiled_module.self_handle_idx().0,
-                            )
-                            .finish(Location::Undefined)
-                            .into_vm_status());
-                        }
-                        self.check_compatibility_if_exist(
-                            &session,
-                            module,
-                            only_new_module,
-                            enforced,
-                        )?;
-                        session
-                            .verify_module(module.code())
-                            .map_err(|e| e.into_vm_status())?;
-
-                        session
-                            .publish_module(module.code().to_vec(), txn_data.sender, cost_strategy)
-                            .map_err(|e| e.into_vm_status())?;
+            let only_new_module =
+                match Self::only_new_module_strategy(remote_cache, package_address) {
+                    Err(e) => {
+                        warn!("[VM]Update module strategy deserialize err : {:?}", e);
+                        return Err(VMStatus::Error(StatusCode::FAILED_TO_DESERIALIZE_RESOURCE));
                     }
-                }
-            }
+                    Ok(only_new_module) => only_new_module,
+                };
+
+            session
+                .publish_module_bundle_with_option(
+                    package
+                        .modules()
+                        .iter()
+                        .map(|m| m.code().to_vec())
+                        .collect(),
+                    package.package_address(), // be careful with the sender.
+                    cost_strategy,
+                    PublishModuleBundleOption {
+                        force_publish: enforced,
+                        only_new_module,
+                    },
+                )
+                .map_err(|e| e.into_vm_status())?;
+
             if let Some(init_script) = package.init_script() {
                 let genesis_address = genesis_address();
                 // If package owner is genesis, then init_script will run using the genesis address
@@ -458,6 +395,7 @@ impl StarcoinVM {
                     sender
                 );
                 session
+                    .as_mut()
                     .execute_script_function(
                         init_script.module(),
                         init_script.function(),
@@ -488,7 +426,7 @@ impl StarcoinVM {
         txn_data: &TransactionMetadata,
         payload: &TransactionPayload,
     ) -> Result<(VMStatus, TransactionOutput), VMStatus> {
-        let mut session = self.move_vm.new_session(remote_cache);
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
 
         // Run the validation logic
         {
@@ -506,22 +444,23 @@ impl StarcoinVM {
                 .charge_intrinsic_gas(txn_data.transaction_size())
                 .map_err(|e| e.into_vm_status())?;
             match payload {
-                TransactionPayload::Script(script) => session.execute_script(
+                TransactionPayload::Script(script) => session.as_mut().execute_script(
                     script.code().to_vec(),
                     script.ty_args().to_vec(),
                     script.args().to_vec(),
                     vec![txn_data.sender()],
                     cost_strategy,
                 ),
-                TransactionPayload::ScriptFunction(script_function) => session
-                    .execute_script_function(
+                TransactionPayload::ScriptFunction(script_function) => {
+                    session.as_mut().execute_script_function(
                         script_function.module(),
                         script_function.function(),
                         script_function.ty_args().to_vec(),
                         script_function.args().to_vec(),
                         vec![txn_data.sender()],
                         cost_strategy,
-                    ),
+                    )
+                }
                 TransactionPayload::Package(_) => {
                     return Err(VMStatus::Error(StatusCode::UNREACHABLE));
                 }
@@ -577,6 +516,7 @@ impl StarcoinVM {
 
         // Run prologue by genesis account
         session
+            .as_mut()
             .execute_function(
                 &account_config::TRANSACTION_MANAGER_MODULE,
                 &PROLOGUE_NAME,
@@ -672,6 +612,7 @@ impl StarcoinVM {
             )
         };
         session
+            .as_mut()
             .execute_function(
                 &account_config::TRANSACTION_MANAGER_MODULE,
                 function_name,
@@ -722,8 +663,9 @@ impl StarcoinVM {
             MoveValue::U8(chain_id.id()),
             MoveValue::U64(parent_gas_used),
         ]);
-        let mut session = self.move_vm.new_session(remote_cache);
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
         session
+            .as_mut()
             .execute_function(
                 &account_config::TRANSACTION_MANAGER_MODULE,
                 &account_config::BLOCK_PROLOGUE_NAME,
@@ -987,7 +929,7 @@ impl StarcoinVM {
         function_name: &IdentStr,
         type_params: Vec<TypeTag>,
         args: Vec<Vec<u8>>,
-    ) -> Result<Vec<(TypeTag, Value)>, VMStatus> {
+    ) -> Result<Vec<Vec<u8>>, VMStatus> {
         let data_cache = StateViewCache::new(state_view);
         if let Err(err) = self.load_configs(&data_cache) {
             warn!("Load config error at verify_transaction: {}", err);
@@ -1002,7 +944,7 @@ impl StarcoinVM {
         };
         let mut session = self.move_vm.new_session(&data_cache);
         let result = session
-            .execute_readonly_function(module, function_name, type_params, args, &mut gas_status)
+            .execute_function(module, function_name, type_params, args, &mut gas_status)
             .map_err(|e| e.into_vm_status())?;
 
         let (changeset, events) = session.finish().map_err(|e| e.into_vm_status())?;
@@ -1053,7 +995,7 @@ impl StarcoinVM {
             gas_status.set_metering(false);
             gas_status
         };
-        let mut session = self.move_vm.new_session(remote_cache);
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
 
         // init_script doesn't need run epilogue
         if remote_cache.is_genesis() {
@@ -1116,7 +1058,7 @@ pub(crate) fn charge_global_write_gas_usage<R: MoveStorage>(
     session: &SessionAdapter<R>,
     sender: &AccountAddress,
 ) -> Result<(), VMStatus> {
-    let total_cost = session.num_mutated_accounts(sender)
+    let total_cost = session.as_ref().num_mutated_accounts(sender)
         * cost_strategy
             .cost_table()
             .gas_constants
@@ -1219,7 +1161,9 @@ pub(crate) fn get_transaction_output<A: AccessPathCache, R: MoveStorage>(
 ) -> Result<TransactionOutput, VMStatus> {
     let gas_used: u64 = max_gas_amount.sub(cost_strategy.remaining_gas()).get();
 
-    let (changeset, events) = session.finish().map_err(|e| e.into_vm_status())?;
+    let (changeset, events) = Into::<Session<R>>::into(session)
+        .finish()
+        .map_err(|e| e.into_vm_status())?;
     let (write_set, events) = convert_changeset_and_events_cached(ap_cache, changeset, events)?;
 
     TXN_EXECUTION_GAS_USAGE.observe(gas_used as f64);

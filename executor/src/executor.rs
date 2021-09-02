@@ -66,7 +66,7 @@ pub fn execute_readonly_function(
     function_name: &Identifier,
     type_params: Vec<TypeTag>,
     args: Vec<Vec<u8>>,
-) -> Result<Vec<(TypeTag, Value)>, VMStatus> {
+) -> Result<Vec<Vec<u8>>, VMStatus> {
     let timer = TXN_EXECUTION_HISTOGRAM
         .with_label_values(&["execute_readonly_function"])
         .start_timer();

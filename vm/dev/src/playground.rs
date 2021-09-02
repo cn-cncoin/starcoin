@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::Result;
+use starcoin_abi_resolver::ABIResolver;
+use starcoin_abi_types::TypeInstantiation;
 use starcoin_crypto::HashValue;
 use starcoin_resource_viewer::{AnnotatedMoveStruct, AnnotatedMoveValue, MoveValueAnnotator};
 use starcoin_state_api::StateNodeStore;
@@ -85,22 +87,57 @@ pub fn call_contract(
     type_args: Vec<TypeTag>,
     args: Vec<TransactionArgument>,
 ) -> Result<Vec<AnnotatedMoveValue>> {
+    let function_name = IdentStr::new(func)?;
+    let func_abi = ABIResolver::new(state_view).resolve_function(&module_id, function_name)?;
+
+    // validate params
+    {
+        anyhow::ensure!(
+            func_abi.ty_args().len() == type_args.len(),
+            "type args length mismatch, expect {}, actual {}",
+            func_abi.ty_args().len(),
+            type_args.len()
+        );
+
+        let arg_abi = func_abi.args();
+        anyhow::ensure!(
+            arg_abi.len() == args.len(),
+            "args length mismatch, expect {}, actual {}",
+            arg_abi.len(),
+            args.len()
+        );
+        for (i, (abi, v)) in arg_abi.iter().zip(&args).enumerate() {
+            match (abi.type_abi(), &v) {
+                (TypeInstantiation::U8, TransactionArgument::U8(_))
+                | (TypeInstantiation::U64, TransactionArgument::U64(_))
+                | (TypeInstantiation::U128, TransactionArgument::U128(_))
+                | (TypeInstantiation::Address, TransactionArgument::Address(_))
+                | (TypeInstantiation::Bool, TransactionArgument::Bool(_)) => {}
+                (TypeInstantiation::Vector(sub_ty), TransactionArgument::U8Vector(_))
+                    if sub_ty.as_ref() == &TypeInstantiation::U8 => {}
+                (abi, value) => anyhow::bail!(
+                    "arg type at position {} mismatch, expect {:?}, actual {}",
+                    i,
+                    abi,
+                    value
+                ),
+            }
+        }
+    }
+
     let mut vm = StarcoinVM::new();
     let rets = vm.execute_readonly_function(
         state_view,
         &module_id,
-        &IdentStr::new(func)?,
+        function_name,
         type_args,
         convert_txn_args(&args),
     )?;
+
     let annotator = MoveValueAnnotator::new(state_view);
     let mut annotated_values = Vec::with_capacity(rets.len());
-    for (t, v) in rets {
-        let layout = annotator.type_tag_to_type_layout(&t)?;
-        let r = v
-            .simple_serialize(&layout)
-            .ok_or_else(|| anyhow::format_err!("fail to serialize contract result"))?;
-        let value = annotator.view_value(&t, r.as_slice())?;
+    for (t, v) in func_abi.returns().iter().zip(rets) {
+        let value = annotator.view_value(&t.type_tag()?, v.as_slice())?;
         annotated_values.push(value);
     }
     Ok(annotated_values)

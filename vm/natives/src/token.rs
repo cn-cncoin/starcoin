@@ -18,7 +18,7 @@ pub fn native_token_name_of(
     arguments: VecDeque<Value>,
 ) -> PartialVMResult<NativeResult> {
     debug_assert!(ty_args.len() == 1);
-    debug_assert!(arguments.len() == 0);
+    debug_assert!(arguments.is_empty());
     //TODO add gas index
     let cost = native_gas(context.cost_table(), NativeCostIndex::TOKEN_NAME_OF, 1);
     let type_tag = context.type_to_type_tag(&ty_args[0])?;
