@@ -12,6 +12,7 @@ use crypto::HashValue;
 use move_vm_runtime::data_cache::MoveStorage;
 use move_vm_runtime::move_arg_validator::MoveArgValidator;
 use move_vm_runtime::move_vm::MoveVM;
+use move_vm_runtime::move_vm_adapter::{PublishModuleBundleOption, SessionAdapter};
 use move_vm_runtime::session::Session;
 use starcoin_config::INITIAL_GAS_SCHEDULE;
 use starcoin_logger::prelude::*;
@@ -209,7 +210,7 @@ impl StarcoinVM {
         remote_cache: &StateViewCache,
     ) -> Result<(), VMStatus> {
         let txn_data = TransactionMetadata::new(transaction)?;
-        let mut session = self.move_vm.new_session(remote_cache);
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
         let mut gas_status = {
             let mut gas_status = GasStatus::new(self.get_gas_schedule()?, GasUnits::new(0));
             gas_status.set_metering(false);
@@ -223,22 +224,31 @@ impl StarcoinVM {
                     Ok(is_enforced) => is_enforced,
                     _ => false,
                 };
-                match Self::only_new_module_strategy(remote_cache, package.package_address()) {
-                    Err(e) => {
-                        warn!("[VM]Update module strategy deserialize err : {:?}", e);
-                        return Err(VMStatus::Error(StatusCode::FAILED_TO_DESERIALIZE_RESOURCE));
-                    }
-                    Ok(only_new_module) => {
-                        for module in package.modules() {
-                            self.check_compatibility_if_exist(
-                                &session,
-                                module,
-                                only_new_module,
-                                enforced,
-                            )?;
+                let only_new_module =
+                    match Self::only_new_module_strategy(remote_cache, package.package_address()) {
+                        Err(e) => {
+                            warn!("[VM]Update module strategy deserialize err : {:?}", e);
+                            return Err(VMStatus::Error(
+                                StatusCode::FAILED_TO_DESERIALIZE_RESOURCE,
+                            ));
                         }
-                    }
-                }
+                        Ok(only_new_module) => only_new_module,
+                    };
+                session
+                    .verify_module_bundle(
+                        package
+                            .modules()
+                            .iter()
+                            .map(|m| m.code().to_vec())
+                            .collect(),
+                        package.package_address(),
+                        &mut gas_status,
+                        PublishModuleBundleOption {
+                            force_publish: enforced,
+                            only_new_module,
+                        },
+                    )
+                    .map_err(|e| e.into_vm_status())?;
             }
             TransactionPayload::Script(s) => {
                 MoveArgValidator::new(&mut session)
@@ -363,7 +373,7 @@ impl StarcoinVM {
         txn_data: &TransactionMetadata,
         package: &Package,
     ) -> Result<(VMStatus, TransactionOutput), VMStatus> {
-        let mut session = self.move_vm.new_session(remote_cache);
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
 
         {
             // Run the validation logic

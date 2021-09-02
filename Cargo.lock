@@ -13,7 +13,7 @@ dependencies = [
 [[package]]
 name = "abigen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -856,7 +856,7 @@ dependencies = [
 [[package]]
 name = "boogie-backend"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -885,7 +885,7 @@ dependencies = [
 [[package]]
 name = "borrow-graph"
 version = "0.0.1"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "diem-workspace-hack",
  "mirai-annotations",
@@ -946,7 +946,7 @@ checksum = "e3b5ca7a04898ad4bcd41c90c5285445ff5b791899bb1b0abdd2a2aa791211d7"
 [[package]]
 name = "bytecode"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "borrow-graph",
  "bytecode-verifier",
@@ -971,7 +971,7 @@ dependencies = [
 [[package]]
 name = "bytecode-interpreter"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bytecode",
@@ -991,7 +991,7 @@ dependencies = [
 [[package]]
 name = "bytecode-interpreter-crypto"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "curve25519-dalek-fiat",
@@ -1004,7 +1004,7 @@ dependencies = [
 [[package]]
 name = "bytecode-source-map"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -1020,7 +1020,7 @@ dependencies = [
 [[package]]
 name = "bytecode-verifier"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "borrow-graph",
@@ -2038,7 +2038,7 @@ checksum = "850878694b7933ca4c9569d30a34b55031b9b139ee1fc7b94a527c4ef960d690"
 [[package]]
 name = "diem-crypto"
 version = "0.0.2"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "aes-gcm 0.8.0",
  "anyhow",
@@ -2069,7 +2069,7 @@ dependencies = [
 [[package]]
 name = "diem-crypto-derive"
 version = "0.0.2"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "proc-macro2 1.0.27",
  "quote 1.0.9",
@@ -2079,7 +2079,7 @@ dependencies = [
 [[package]]
 name = "diem-proptest-helpers"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "crossbeam 0.8.0",
  "diem-workspace-hack",
@@ -2090,7 +2090,7 @@ dependencies = [
 [[package]]
 name = "diem-temppath"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "diem-workspace-hack",
  "hex",
@@ -2100,7 +2100,7 @@ dependencies = [
 [[package]]
 name = "diem-workspace-hack"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "Inflector",
  "anyhow",
@@ -2227,7 +2227,7 @@ dependencies = [
 [[package]]
 name = "disassembler"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bytecode-source-map",
@@ -2255,7 +2255,7 @@ dependencies = [
 [[package]]
 name = "docgen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bytecode",
@@ -2415,7 +2415,7 @@ dependencies = [
 [[package]]
 name = "errmapgen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -3631,7 +3631,7 @@ checksum = "47be2f14c678be2fdcab04ab1171db51b2762ce6f0a8ee87c8dd4a04ed216135"
 [[package]]
 name = "ir-to-bytecode"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bytecode-source-map",
@@ -3650,7 +3650,7 @@ dependencies = [
 [[package]]
 name = "ir-to-bytecode-syntax"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "diem-workspace-hack",
@@ -4750,7 +4750,7 @@ checksum = "b48e78b8626927bd980dff38d8147006323f5d7634d7bc9e31c3a59e07da1b28"
 [[package]]
 name = "move-binary-format"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "diem-workspace-hack",
@@ -4766,7 +4766,7 @@ dependencies = [
 [[package]]
 name = "move-command-line-common"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "diem-workspace-hack",
@@ -4777,7 +4777,7 @@ dependencies = [
 [[package]]
 name = "move-core-types"
 version = "0.0.2"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -4796,7 +4796,7 @@ dependencies = [
 [[package]]
 name = "move-coverage"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -4835,7 +4835,7 @@ dependencies = [
 [[package]]
 name = "move-ir-types"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "diem-workspace-hack",
@@ -4849,7 +4849,7 @@ dependencies = [
 [[package]]
 name = "move-lang"
 version = "0.0.1"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bcs",
@@ -4877,7 +4877,7 @@ dependencies = [
 [[package]]
 name = "move-lang-test-utils"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "datatest-stable",
  "diem-workspace-hack",
@@ -4888,7 +4888,7 @@ dependencies = [
 [[package]]
 name = "move-model"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "bytecode-source-map",
@@ -4915,7 +4915,7 @@ dependencies = [
 [[package]]
 name = "move-prover"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "abigen",
  "anyhow",
@@ -4953,7 +4953,7 @@ dependencies = [
 [[package]]
 name = "move-stdlib"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "diem-workspace-hack",
  "docgen",
@@ -4974,7 +4974,7 @@ dependencies = [
 [[package]]
 name = "move-symbol-pool"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "diem-workspace-hack",
  "once_cell",
@@ -4984,7 +4984,7 @@ dependencies = [
 [[package]]
 name = "move-vm-runtime"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "bytecode-verifier",
  "diem-workspace-hack",
@@ -5002,7 +5002,7 @@ dependencies = [
 [[package]]
 name = "move-vm-types"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "bcs",
  "diem-workspace-hack",
@@ -7400,7 +7400,7 @@ checksum = "42a568c8f2cd051a4d283bd6eb0343ac214c1b0f1ac19f93e1175b2dee38c73d"
 [[package]]
 name = "short-hex-str"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "diem-workspace-hack",
  "mirai-annotations",
@@ -11077,7 +11077,7 @@ checksum = "85e60b0d1b5f99db2556934e21937020776a5d31520bf169e851ac44e6420214"
 [[package]]
 name = "x"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "anyhow",
  "camino",
@@ -11106,7 +11106,7 @@ dependencies = [
 [[package]]
 name = "x-core"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "camino",
  "determinator",
@@ -11124,7 +11124,7 @@ dependencies = [
 [[package]]
 name = "x-lint"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/diem?rev=8492fd52582a2068de112198027b007933e599d8#8492fd52582a2068de112198027b007933e599d8"
+source = "git+https://github.com/starcoinorg/diem?rev=6af5ffb95913962100ad661e07f44a9a96c4a1e0#6af5ffb95913962100ad661e07f44a9a96c4a1e0"
 dependencies = [
  "camino",
  "guppy",

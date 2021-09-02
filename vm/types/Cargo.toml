@@ -23,11 +23,11 @@ bech32 = "0.8"
 
 proptest = { version = "1.0.0", default-features = false, optional = true }
 proptest-derive = { version = "0.3.0", default-features = false, optional = true }
-move-core-types = { git = "https://github.com/starcoinorg/diem", rev = "8492fd52582a2068de112198027b007933e599d8" }
-move-vm-types = { git = "https://github.com/starcoinorg/diem", rev = "8492fd52582a2068de112198027b007933e599d8" }
-bytecode-verifier = { git = "https://github.com/starcoinorg/diem", rev = "8492fd52582a2068de112198027b007933e599d8" }
-vm = { git = "https://github.com/starcoinorg/diem", package = "move-binary-format", rev = "8492fd52582a2068de112198027b007933e599d8"}
-move-ir-types = { git = "https://github.com/starcoinorg/diem", rev = "8492fd52582a2068de112198027b007933e599d8" }
+move-core-types = { git = "https://github.com/starcoinorg/diem", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0" }
+move-vm-types = { git = "https://github.com/starcoinorg/diem", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0" }
+bytecode-verifier = { git = "https://github.com/starcoinorg/diem", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0" }
+vm = { git = "https://github.com/starcoinorg/diem", package = "move-binary-format", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0"}
+move-ir-types = { git = "https://github.com/starcoinorg/diem", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0" }
 
 bcs-ext = { package = "bcs-ext", path = "../../commons/bcs_ext" }
 starcoin-proptest-helpers = { path = "../../commons/proptest-helpers", optional = true }
@@ -38,7 +38,7 @@ forkable-jellyfish-merkle = { path = "../../commons/forkable-jellyfish-merkle"}
 [dev-dependencies]
 proptest = "1.0.0"
 proptest-derive = "0.3.0"
-vm = { git = "https://github.com/starcoinorg/diem",package = "move-binary-format", rev = "8492fd52582a2068de112198027b007933e599d8", features = ["fuzzing"]}
+vm = { git = "https://github.com/starcoinorg/diem",package = "move-binary-format", rev = "6af5ffb95913962100ad661e07f44a9a96c4a1e0", features = ["fuzzing"]}
 starcoin-crypto = { path = "../../commons/crypto", features = ["fuzzing"] }
 starcoin-proptest-helpers = { path = "../../commons/proptest-helpers"}
 

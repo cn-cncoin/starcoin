@@ -11,9 +11,9 @@ anyhow = "1.0.41"
 once_cell = "1.8.0"
 tempfile = "3.1.0"
 regex = { version = "1.4.3", default-features = false, features = ["std", "perf"] }
-move-lang = { package="move-lang", git = "https://github.com/starcoinorg/diem", rev="8492fd52582a2068de112198027b007933e599d8"  }
-move-command-line-common = {git = "https://github.com/starcoinorg/diem", rev="8492fd52582a2068de112198027b007933e599d8"}
-move-lang-test-utils = { package="move-lang-test-utils", git = "https://github.com/starcoinorg/diem", rev="8492fd52582a2068de112198027b007933e599d8"  }
+move-lang = { package="move-lang", git = "https://github.com/starcoinorg/diem", rev="6af5ffb95913962100ad661e07f44a9a96c4a1e0"  }
+move-command-line-common = {git = "https://github.com/starcoinorg/diem", rev="6af5ffb95913962100ad661e07f44a9a96c4a1e0"}
+move-lang-test-utils = { package="move-lang-test-utils", git = "https://github.com/starcoinorg/diem", rev="6af5ffb95913962100ad661e07f44a9a96c4a1e0"  }
 walkdir = "2.3"
 rayon = "1.5.1"
 itertools = "0.10.1"
