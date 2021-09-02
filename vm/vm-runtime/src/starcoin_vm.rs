@@ -10,7 +10,9 @@ use crate::metrics::{BLOCK_UNCLES, TXN_EXECUTION_GAS_USAGE};
 use anyhow::{format_err, Error, Result};
 use crypto::HashValue;
 use move_vm_runtime::data_cache::MoveStorage;
-use move_vm_runtime::move_vm_adapter::{MoveVMAdapter, SessionAdapter};
+use move_vm_runtime::move_arg_validator::MoveArgValidator;
+use move_vm_runtime::move_vm::MoveVM;
+use move_vm_runtime::session::Session;
 use starcoin_config::INITIAL_GAS_SCHEDULE;
 use starcoin_logger::prelude::*;
 use starcoin_move_compiler::check_module_compat;
@@ -64,7 +66,7 @@ use std::sync::Arc;
 #[allow(clippy::upper_case_acronyms)]
 /// Wrapper of MoveVM
 pub struct StarcoinVM {
-    move_vm: Arc<MoveVMAdapter>,
+    move_vm: Arc<MoveVM>,
     vm_config: Option<VMConfig>,
     version: Option<Version>,
 }
@@ -77,7 +79,7 @@ impl Default for StarcoinVM {
 
 impl StarcoinVM {
     pub fn new() -> Self {
-        let inner = MoveVMAdapter::new(super::natives::starcoin_natives())
+        let inner = MoveVM::new(super::natives::starcoin_natives())
             .expect("should be able to create Move VM; check if there are duplicated natives");
         Self {
             move_vm: Arc::new(inner),
@@ -239,7 +241,7 @@ impl StarcoinVM {
                 }
             }
             TransactionPayload::Script(s) => {
-                session
+                MoveArgValidator::new(&mut session)
                     .verify_script_args(
                         s.code().to_vec(),
                         s.ty_args().to_vec(),
@@ -249,7 +251,7 @@ impl StarcoinVM {
                     .map_err(|e| e.into_vm_status())?;
             }
             TransactionPayload::ScriptFunction(s) => {
-                session
+                MoveArgValidator::new(&mut session)
                     .verify_script_function_args(
                         s.module(),
                         s.function(),
@@ -291,7 +293,7 @@ impl StarcoinVM {
 
     fn check_compatibility_if_exist<R: MoveStorage>(
         &self,
-        session: &SessionAdapter<R>,
+        session: &Session<R>,
         module: &Module,
         only_new_module: bool,
         enforced: bool,

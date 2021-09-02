@@ -29,5 +29,5 @@ starcoin-natives = {path = "../natives"}
 
 [features]
 default = []
-testing = ["move-stdlib/testing"]
+testing = ["move-stdlib/testing", "starcoin-natives/testing"]
 
