@@ -213,7 +213,7 @@ impl FunctionABI {
         let args = self
             .args
             .iter()
-            .map(|arg| Ok(arg.subst(ty_args)?))
+            .map(|arg| arg.subst(ty_args))
             .collect::<Result<Vec<_>>>()?;
         let rets = self
             .returns
@@ -438,7 +438,7 @@ impl StructABI {
             fields: self
                 .fields
                 .iter()
-                .map(|f| Ok(f.subst(ty_args)?))
+                .map(|f| f.subst(ty_args))
                 .collect::<Result<_>>()?,
         })
     }
@@ -524,7 +524,7 @@ impl StructInstantiation {
             fields: self
                 .fields
                 .iter()
-                .map(|f| Ok(f.subst(ty_args)?))
+                .map(|f| f.subst(ty_args))
                 .collect::<Result<_>>()?,
         })
     }
