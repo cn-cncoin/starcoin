@@ -22,7 +22,7 @@ dependencies = [
  "heck",
  "log 0.4.14",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-model",
  "serde",
 ]
@@ -869,7 +869,7 @@ dependencies = [
  "log 0.4.14",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-model",
  "num",
  "once_cell",
@@ -959,7 +959,7 @@ dependencies = [
  "log 0.4.14",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-model",
  "num",
  "once_cell",
@@ -980,7 +980,7 @@ dependencies = [
  "diem-workspace-hack",
  "itertools 0.10.1",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-model",
  "move-vm-runtime",
  "num",
@@ -1011,7 +1011,7 @@ dependencies = [
  "codespan-reporting",
  "diem-workspace-hack",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-symbol-pool",
  "serde",
@@ -1027,7 +1027,7 @@ dependencies = [
  "diem-workspace-hack",
  "mirai-annotations",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "petgraph",
 ]
 
@@ -2039,14 +2039,14 @@ checksum = "850878694b7933ca4c9569d30a34b55031b9b139ee1fc7b94a527c4ef960d690"
 [[package]]
 name = "diem-crypto"
 version = "0.0.2"
-source = "git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1#ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1"
+source = "git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd#69ab01213a2e4128a1a8c8216bbf666c9ef90abd"
 dependencies = [
  "aes-gcm 0.8.0",
  "anyhow",
  "bcs",
  "bytes 1.1.0",
  "curve25519-dalek-fiat",
- "diem-crypto-derive",
+ "diem-crypto-derive 0.0.2 (git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd)",
  "digest 0.9.0",
  "ed25519-dalek-fiat",
  "hex",
@@ -2065,6 +2065,47 @@ dependencies = [
  "thiserror",
  "tiny-keccak",
  "x25519-dalek-fiat",
+]
+
+[[package]]
+name = "diem-crypto"
+version = "0.0.2"
+source = "git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1#ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1"
+dependencies = [
+ "aes-gcm 0.8.0",
+ "anyhow",
+ "bcs",
+ "bytes 1.1.0",
+ "curve25519-dalek-fiat",
+ "diem-crypto-derive 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
+ "digest 0.9.0",
+ "ed25519-dalek-fiat",
+ "hex",
+ "hkdf",
+ "mirai-annotations",
+ "once_cell",
+ "proptest",
+ "proptest-derive",
+ "rand 0.8.4",
+ "rand_core 0.6.3",
+ "serde",
+ "serde-name",
+ "serde_bytes",
+ "sha2 0.9.3",
+ "static_assertions",
+ "thiserror",
+ "tiny-keccak",
+ "x25519-dalek-fiat",
+]
+
+[[package]]
+name = "diem-crypto-derive"
+version = "0.0.2"
+source = "git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd#69ab01213a2e4128a1a8c8216bbf666c9ef90abd"
+dependencies = [
+ "proc-macro2 1.0.29",
+ "quote 1.0.9",
+ "syn 1.0.76",
 ]
 
 [[package]]
@@ -2237,7 +2278,7 @@ dependencies = [
  "diem-workspace-hack",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-coverage 0.1.0",
  "move-ir-types",
  "structopt",
@@ -2423,7 +2464,7 @@ dependencies = [
  "diem-workspace-hack",
  "log 0.4.14",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-model",
  "serde",
 ]
@@ -3642,7 +3683,7 @@ dependencies = [
  "ir-to-bytecode-syntax",
  "log 0.4.14",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-symbol-pool",
  "ouroboros",
@@ -3657,7 +3698,7 @@ dependencies = [
  "anyhow",
  "diem-workspace-hack",
  "hex",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-symbol-pool",
 ]
@@ -4769,7 +4810,7 @@ dependencies = [
  "anyhow",
  "diem-workspace-hack",
  "mirai-annotations",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "once_cell",
  "proptest",
  "proptest-derive",
@@ -4786,6 +4827,23 @@ dependencies = [
  "diem-workspace-hack",
  "difference",
  "walkdir",
+]
+
+[[package]]
+name = "move-core-types"
+version = "0.0.2"
+source = "git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd#69ab01213a2e4128a1a8c8216bbf666c9ef90abd"
+dependencies = [
+ "anyhow",
+ "bcs",
+ "bech32",
+ "hex",
+ "mirai-annotations",
+ "once_cell",
+ "rand 0.8.4",
+ "ref-cast",
+ "serde",
+ "serde_bytes",
 ]
 
 [[package]]
@@ -4821,7 +4879,7 @@ dependencies = [
  "diem-workspace-hack",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "once_cell",
  "petgraph",
@@ -4854,7 +4912,7 @@ dependencies = [
  "anyhow",
  "diem-workspace-hack",
  "hex",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-symbol-pool",
  "once_cell",
  "serde",
@@ -4877,7 +4935,7 @@ dependencies = [
  "ir-to-bytecode",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-symbol-pool",
  "once_cell",
@@ -4916,7 +4974,7 @@ dependencies = [
  "log 0.4.14",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-lang",
  "move-symbol-pool",
@@ -4975,7 +5033,7 @@ dependencies = [
  "log 0.4.14",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-prover",
  "move-vm-runtime",
  "move-vm-types",
@@ -5005,7 +5063,7 @@ dependencies = [
  "fail",
  "mirai-annotations",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-vm-types",
  "once_cell",
  "parking_lot 0.11.2",
@@ -5022,7 +5080,7 @@ dependencies = [
  "diem-workspace-hack",
  "mirai-annotations",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "once_cell",
  "serde",
  "sha2 0.9.3",
@@ -7094,9 +7152,9 @@ name = "schemars"
 version = "0.8.3"
 source = "git+https://github.com/starcoinorg/schemars?rev=f31aab7c9f32513b4d40d0218942c906171fabd6#f31aab7c9f32513b4d40d0218942c906171fabd6"
 dependencies = [
- "diem-crypto",
+ "diem-crypto 0.0.2 (git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd)",
  "dyn-clone",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=69ab01213a2e4128a1a8c8216bbf666c9ef90abd)",
  "parity-multiaddr",
  "schemars_derive 0.8.3 (git+https://github.com/starcoinorg/schemars?rev=f31aab7c9f32513b4d40d0218942c906171fabd6)",
  "serde",
@@ -8129,8 +8187,8 @@ version = "1.6.0"
 dependencies = [
  "anyhow",
  "bcs-ext",
- "diem-crypto",
- "diem-crypto-derive",
+ "diem-crypto 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
+ "diem-crypto-derive 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "hex",
  "once_cell",
  "rand 0.8.4",
@@ -8540,7 +8598,7 @@ name = "starcoin-move-explain"
 version = "1.6.0"
 dependencies = [
  "bcs-ext",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "stdlib",
  "structopt",
 ]
@@ -8554,7 +8612,7 @@ dependencies = [
  "log 0.4.14",
  "move-binary-format",
  "move-command-line-common",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-prover",
  "move-vm-runtime",
  "move-vm-types",
@@ -8863,7 +8921,7 @@ dependencies = [
  "starcoin-txpool-api",
  "starcoin-types",
  "starcoin-vm-types",
- "structopt 0.3.23",
+ "structopt",
  "thiserror",
  "vm-status-translator",
 ]
@@ -9417,7 +9475,7 @@ dependencies = [
  "log 0.4.14",
  "mirai-annotations",
  "move-binary-format",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "move-ir-types",
  "move-vm-types",
  "num_enum",
@@ -10414,7 +10472,7 @@ dependencies = [
  "anyhow",
  "bcs",
  "heck",
- "move-core-types",
+ "move-core-types 0.0.2 (git+https://github.com/starcoinorg/diem?rev=ae28a902f1c2dc9c1b09c0e18049d43bdeecdaf1)",
  "regex",
  "serde-generate",
  "serde-reflection 0.3.2 (git+https://github.com/starcoinorg/serde-reflection?rev=694048797338ff7385006d968e786b6d9dbdeb8b)",

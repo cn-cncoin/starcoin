@@ -5,14 +5,13 @@
 
 use anyhow::{bail, ensure, format_err, Result};
 use include_dir::{include_dir, Dir};
-use log::{debug, info, LevelFilter};
+use log::{info, LevelFilter};
 use once_cell::sync::Lazy;
 use rayon::prelude::*;
 use sha2::{Digest, Sha256};
 use starcoin_crypto::hash::PlainCryptoHash;
 use starcoin_crypto::HashValue;
 use starcoin_move_compiler::compiled_unit::CompiledUnit;
-use starcoin_vm_types::access::ModuleAccess;
 use starcoin_vm_types::bytecode_verifier::{dependencies, verify_module};
 use starcoin_vm_types::file_format::CompiledModule;
 pub use starcoin_vm_types::genesis_config::StdlibVersion;
@@ -59,8 +58,16 @@ pub const STDLIB_DIR: Dir = include_dir!("modules");
 
 // The current stdlib that is freshly built. This will never be used in deployment so we don't need
 // to pull the same trick here in order to include this in the Rust binary.
-static FRESH_MOVELANG_STDLIB: Lazy<Vec<CompiledModule>> =
-    Lazy::new(|| build_stdlib().values().cloned().collect());
+static FRESH_MOVELANG_STDLIB: Lazy<Vec<Vec<u8>>> = Lazy::new(|| {
+    build_stdlib()
+        .values()
+        .map(|m| {
+            let mut blob = vec![];
+            m.serialize(&mut blob).unwrap();
+            blob
+        })
+        .collect()
+});
 
 // This needs to be a string literal due to restrictions imposed by include_bytes.
 /// The compiled library needs to be included in the Rust binary due to Docker deployment issues.
@@ -82,11 +89,12 @@ pub static STDLIB_VERSIONS: Lazy<Vec<StdlibVersion>> = Lazy::new(|| {
     versions
 });
 
-static COMPILED_STDLIB: Lazy<HashMap<StdlibVersion, Vec<CompiledModule>>> = Lazy::new(|| {
+static COMPILED_STDLIB: Lazy<HashMap<StdlibVersion, Vec<Vec<u8>>>> = Lazy::new(|| {
     let mut map = HashMap::new();
     for version in &*STDLIB_VERSIONS {
-        let verified_modules = load_compiled_modules(*version);
-        map.insert(*version, verified_modules);
+        let modules = read_compiled_modules(*version);
+        verify_compiled_modules(&modules);
+        map.insert(*version, modules);
     }
     map
 });
@@ -118,7 +126,7 @@ pub enum StdLibOptions {
 /// Returns a reference to the standard library. Depending upon the `option` flag passed in
 /// either a compiled version of the standard library will be returned or a new freshly built stdlib
 /// will be used.
-pub fn stdlib_modules(option: StdLibOptions) -> &'static [CompiledModule] {
+pub fn stdlib_modules(option: StdLibOptions) -> &'static [Vec<u8>] {
     match option {
         StdLibOptions::Fresh => &*FRESH_MOVELANG_STDLIB,
         StdLibOptions::Compiled(version) => &*COMPILED_STDLIB
@@ -132,31 +140,14 @@ pub fn stdlib_package(
     init_script: Option<ScriptFunction>,
 ) -> Result<Package> {
     let modules = stdlib_modules(stdlib_option);
-    module_to_package(modules, init_script)
+    module_to_package(modules.to_vec(), init_script)
 }
 
 fn module_to_package(
-    modules: &[CompiledModule],
+    modules: Vec<Vec<u8>>,
     init_script: Option<ScriptFunction>,
 ) -> Result<Package> {
-    Package::new(
-        modules
-            .iter()
-            .map(|m| {
-                let mut blob = vec![];
-                m.serialize(&mut blob)
-                    .expect("serializing stdlib must work");
-                let handle = &m.module_handles()[0];
-                debug!(
-                    "Add module: {}::{}",
-                    m.address_identifier_at(handle.address),
-                    m.identifier_at(handle.name)
-                );
-                Module::new(blob)
-            })
-            .collect(),
-        init_script,
-    )
+    Package::new(modules.into_iter().map(Module::new).collect(), init_script)
 }
 
 pub fn restore_stdlib_in_dir(dir: &Path) -> anyhow::Result<Vec<String>> {
@@ -292,9 +283,10 @@ fn load_latest_compiled_modules() -> Vec<CompiledModule> {
     load_compiled_modules(StdlibVersion::Latest)
 }
 
-fn load_compiled_modules(stdlib_version: StdlibVersion) -> Vec<CompiledModule> {
+/// read module blobs from dir.
+pub fn read_compiled_modules(stdlib_version: StdlibVersion) -> Vec<Vec<u8>> {
     let sub_dir = format!("{}/{}", stdlib_version.as_string(), STDLIB_DIR_NAME);
-    let mut modules: Vec<(String, CompiledModule)> = COMPILED_MOVE_CODE_DIR
+    let mut modules: Vec<(String, _)> = COMPILED_MOVE_CODE_DIR
         .get_dir(Path::new(sub_dir.as_str()))
         .unwrap()
         .files()
@@ -302,22 +294,31 @@ fn load_compiled_modules(stdlib_version: StdlibVersion) -> Vec<CompiledModule> {
         .map(|file| {
             (
                 file.path().to_str().unwrap().to_string(),
-                CompiledModule::deserialize(&file.contents()).unwrap(),
+                file.contents().to_vec(),
             )
         })
         .collect();
-
     // We need to verify modules based on their dependency order.
     modules.sort_by_key(|(module_name, _)| module_name.clone());
+    modules.into_iter().map(|v| v.1).collect()
+}
 
+/// verify modules blob.
+pub fn verify_compiled_modules(modules: &[Vec<u8>]) -> Vec<CompiledModule> {
     let mut verified_modules = vec![];
-    for (_, module) in modules.into_iter() {
+    for module in modules.into_iter() {
+        let module = CompiledModule::deserialize(&module).expect("module deserialize should be ok");
         verify_module(&module).expect("stdlib module failed to verify");
         dependencies::verify_module(&module, &verified_modules)
             .expect("stdlib module dependency failed to verify");
         verified_modules.push(module)
     }
     verified_modules
+}
+
+fn load_compiled_modules(stdlib_version: StdlibVersion) -> Vec<CompiledModule> {
+    let modules = read_compiled_modules(stdlib_version);
+    verify_compiled_modules(modules.as_slice())
 }
 
 pub fn modules_diff(
@@ -380,7 +381,16 @@ pub fn load_upgrade_package(
             if diff.is_empty() {
                 None
             } else {
-                Some(module_to_package(diff.as_slice(), None)?)
+                Some(module_to_package(
+                    diff.into_iter()
+                        .map(|m| {
+                            let mut blob = vec![];
+                            m.serialize(&mut blob).unwrap();
+                            blob
+                        })
+                        .collect(),
+                    None,
+                )?)
             }
         }
         (StdlibVersion::Latest, _) => {
