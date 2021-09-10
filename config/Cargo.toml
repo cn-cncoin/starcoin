@@ -34,4 +34,4 @@ diem-temppath = { git = "https://github.com/starcoinorg/diem", rev="ae28a902f1c2
 starcoin-system = {path = "../commons/system", package="starcoin-system"}
 network-api = {path = "../network/api", package="network-api"}
 stdlib = { path = "../vm/stdlib"}
-schemars = {git = "https://github.com/starcoinorg/schemars", rev="f31aab7c9f32513b4d40d0218942c906171fabd6"}
+schemars = {git = "https://github.com/starcoinorg/schemars", rev="0be35d1245dedfc6ab3950500a32cc6af192089d"}

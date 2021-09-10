@@ -97,7 +97,6 @@ pub struct TransactionScriptABI {
     /// Some text comment.
     doc: String,
     /// The `code` value to set in the `Script` object.
-    #[serde(with = "serde_bytes")]
     code: Vec<u8>,
     /// The names of the type arguments.
     ty_args: Vec<TypeParameterABI>,
