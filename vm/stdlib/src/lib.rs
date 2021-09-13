@@ -306,7 +306,7 @@ pub fn read_compiled_modules(stdlib_version: StdlibVersion) -> Vec<Vec<u8>> {
 /// verify modules blob.
 pub fn verify_compiled_modules(modules: &[Vec<u8>]) -> Vec<CompiledModule> {
     let mut verified_modules = vec![];
-    for module in modules.into_iter() {
+    for module in modules {
         let module = CompiledModule::deserialize(&module).expect("module deserialize should be ok");
         verify_module(&module).expect("stdlib module failed to verify");
         dependencies::verify_module(&module, &verified_modules)
