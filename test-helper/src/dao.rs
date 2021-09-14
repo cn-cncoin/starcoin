@@ -392,6 +392,21 @@ pub fn vote_vm_config_script(_net: &ChainNetwork, vm_config: VMConfig) -> Script
     )
 }
 
+pub fn vote_language_version(_net: &ChainNetwork, lang_version: u64) -> ScriptFunction {
+    ScriptFunction::new(
+        ModuleId::new(
+            core_code_address(),
+            Identifier::new("OnChainConfigScripts").unwrap(),
+        ),
+        Identifier::new("propose_update_move_language_version").unwrap(),
+        vec![],
+        vec![
+            bcs_ext::to_bytes(&lang_version).unwrap(),
+            bcs_ext::to_bytes(&0u64).unwrap(),
+        ],
+    )
+}
+
 /// execute on chain config scripts
 pub fn execute_script_on_chain_config(
     _net: &ChainNetwork,
