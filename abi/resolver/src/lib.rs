@@ -157,8 +157,11 @@ impl<'a> ABIResolver<'a> {
             }
             Type::Vector(sub_ty) => TypeInstantiation::new_vector(self.resolve_type(&sub_ty)?),
             Type::TypeParameter(i) => TypeInstantiation::TypeParameter(*i as usize),
-            Type::Reference(_) | Type::MutableReference(_) => {
-                anyhow::bail!("cannot resolve type api for {:?}", &ty)
+            Type::Reference(ty) => {
+                TypeInstantiation::Reference(false, Box::new(self.resolve_type(&ty)?))
+            }
+            Type::MutableReference(ty) => {
+                TypeInstantiation::Reference(true, Box::new(self.resolve_type(&ty)?))
             }
         })
     }

@@ -578,7 +578,7 @@ pub enum TypeInstantiation {
     Vector(Box<TypeInstantiation>),
     Struct(Box<StructInstantiation>),
     TypeParameter(usize),
-    //Reference(/* mut */ bool, /* type */ Box<TypeInstantiation>),
+    Reference(/* mut */ bool, /* type */ Box<TypeInstantiation>),
 }
 impl TypeInstantiation {
     pub fn new_vector(subtype: TypeInstantiation) -> Self {
@@ -600,6 +600,7 @@ impl TypeInstantiation {
             Self::Vector(t) => MoveTypeLayout::Vector(Box::new(t.layout()?)),
             Self::Struct(s) => MoveTypeLayout::Struct(s.layout()?),
             Self::TypeParameter(_) => anyhow::bail!("get type layout failed -- {:?}", self),
+            Self::Reference(_, _) => anyhow::bail!("get type layout failed -- {:?}", self),
         })
     }
     pub fn type_tag(&self) -> Result<TypeTag> {
@@ -615,6 +616,7 @@ impl TypeInstantiation {
             Self::Vector(t) => TypeTag::Vector(Box::new(t.type_tag()?)),
             Self::Struct(s) => TypeTag::Struct(s.struct_tag()?),
             Self::TypeParameter(_) => anyhow::bail!("get type tag failed -- {:?}", self),
+            Self::Reference(_, _) => anyhow::bail!("get type tag failed -- {:?}", self),
         })
     }
     pub fn subst(&self, ty_args: &[TypeInstantiation]) -> Result<TypeInstantiation> {
@@ -630,6 +632,7 @@ impl TypeInstantiation {
             },
             T::Vector(ty) => T::Vector(Box::new(ty.subst(ty_args)?)),
             T::Struct(struct_ty) => T::Struct(Box::new(struct_ty.subst(ty_args)?)),
+            T::Reference(mutable, ty) => T::Reference(*mutable, Box::new(ty.subst(ty_args)?)),
             _ => self.clone(),
         })
     }
@@ -666,6 +669,7 @@ impl<'d> serde::de::DeserializeSeed<'d> for &TypeInstantiation {
             T::TypeParameter(_) => Err(D::Error::custom(
                 "type abi cannot be type parameter variant",
             )),
+            T::Reference(_, _) => Err(D::Error::custom("type abi cannot be Reference variant")),
         }
     }
 }

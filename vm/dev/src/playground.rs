@@ -129,6 +129,9 @@ pub fn call_contract(
                 | (TypeInstantiation::Bool, TransactionArgument::Bool(_)) => {}
                 (TypeInstantiation::Vector(sub_ty), TransactionArgument::U8Vector(_))
                     if sub_ty.as_ref() == &TypeInstantiation::U8 => {}
+                (TypeInstantiation::Reference(_, ref_type), TransactionArgument::Address(_))
+                    if (ref_type.as_ref() == &TypeInstantiation::Address)
+                        || (ref_type.as_ref() == &TypeInstantiation::Signer) => {}
                 (abi, value) => anyhow::bail!(
                     "arg type at position {} mismatch, expect {:?}, actual {}",
                     i,
