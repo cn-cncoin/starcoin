@@ -1384,6 +1384,28 @@
                                                           }
                                                         },
                                                         "additionalProperties": false
+                                                      },
+                                                      {
+                                                        "type": "object",
+                                                        "required": [
+                                                          "Reference"
+                                                        ],
+                                                        "properties": {
+                                                          "Reference": {
+                                                            "type": "array",
+                                                            "items": [
+                                                              {
+                                                                "type": "boolean"
+                                                              },
+                                                              {
+                                                                "$ref": "#/definitions/TypeInstantiation"
+                                                              }
+                                                            ],
+                                                            "maxItems": 2,
+                                                            "minItems": 2
+                                                          }
+                                                        },
+                                                        "additionalProperties": false
                                                       }
                                                     ]
                                                   }
@@ -1535,6 +1557,28 @@
                                                         "type": "integer",
                                                         "format": "uint",
                                                         "minimum": 0.0
+                                                      }
+                                                    },
+                                                    "additionalProperties": false
+                                                  },
+                                                  {
+                                                    "type": "object",
+                                                    "required": [
+                                                      "Reference"
+                                                    ],
+                                                    "properties": {
+                                                      "Reference": {
+                                                        "type": "array",
+                                                        "items": [
+                                                          {
+                                                            "type": "boolean"
+                                                          },
+                                                          {
+                                                            "$ref": "#/definitions/TypeInstantiation"
+                                                          }
+                                                        ],
+                                                        "maxItems": 2,
+                                                        "minItems": 2
                                                       }
                                                     },
                                                     "additionalProperties": false
@@ -1717,6 +1761,28 @@
                                                             "type": "integer",
                                                             "format": "uint",
                                                             "minimum": 0.0
+                                                          }
+                                                        },
+                                                        "additionalProperties": false
+                                                      },
+                                                      {
+                                                        "type": "object",
+                                                        "required": [
+                                                          "Reference"
+                                                        ],
+                                                        "properties": {
+                                                          "Reference": {
+                                                            "type": "array",
+                                                            "items": [
+                                                              {
+                                                                "type": "boolean"
+                                                              },
+                                                              {
+                                                                "$ref": "#/definitions/TypeInstantiation"
+                                                              }
+                                                            ],
+                                                            "maxItems": 2,
+                                                            "minItems": 2
                                                           }
                                                         },
                                                         "additionalProperties": false
@@ -1937,6 +2003,28 @@
                       "type": "integer",
                       "format": "uint",
                       "minimum": 0.0
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "Reference"
+                  ],
+                  "properties": {
+                    "Reference": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "$ref": "#/definitions/TypeInstantiation"
+                        }
+                      ],
+                      "maxItems": 2,
+                      "minItems": 2
                     }
                   },
                   "additionalProperties": false
@@ -2510,6 +2598,28 @@
                                                           }
                                                         },
                                                         "additionalProperties": false
+                                                      },
+                                                      {
+                                                        "type": "object",
+                                                        "required": [
+                                                          "Reference"
+                                                        ],
+                                                        "properties": {
+                                                          "Reference": {
+                                                            "type": "array",
+                                                            "items": [
+                                                              {
+                                                                "type": "boolean"
+                                                              },
+                                                              {
+                                                                "$ref": "#/definitions/TypeInstantiation"
+                                                              }
+                                                            ],
+                                                            "maxItems": 2,
+                                                            "minItems": 2
+                                                          }
+                                                        },
+                                                        "additionalProperties": false
                                                       }
                                                     ]
                                                   }
@@ -2661,6 +2771,28 @@
                                                         "type": "integer",
                                                         "format": "uint",
                                                         "minimum": 0.0
+                                                      }
+                                                    },
+                                                    "additionalProperties": false
+                                                  },
+                                                  {
+                                                    "type": "object",
+                                                    "required": [
+                                                      "Reference"
+                                                    ],
+                                                    "properties": {
+                                                      "Reference": {
+                                                        "type": "array",
+                                                        "items": [
+                                                          {
+                                                            "type": "boolean"
+                                                          },
+                                                          {
+                                                            "$ref": "#/definitions/TypeInstantiation"
+                                                          }
+                                                        ],
+                                                        "maxItems": 2,
+                                                        "minItems": 2
                                                       }
                                                     },
                                                     "additionalProperties": false
@@ -2843,6 +2975,28 @@
                                                             "type": "integer",
                                                             "format": "uint",
                                                             "minimum": 0.0
+                                                          }
+                                                        },
+                                                        "additionalProperties": false
+                                                      },
+                                                      {
+                                                        "type": "object",
+                                                        "required": [
+                                                          "Reference"
+                                                        ],
+                                                        "properties": {
+                                                          "Reference": {
+                                                            "type": "array",
+                                                            "items": [
+                                                              {
+                                                                "type": "boolean"
+                                                              },
+                                                              {
+                                                                "$ref": "#/definitions/TypeInstantiation"
+                                                              }
+                                                            ],
+                                                            "maxItems": 2,
+                                                            "minItems": 2
                                                           }
                                                         },
                                                         "additionalProperties": false
@@ -3066,6 +3220,28 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "Reference"
+                  ],
+                  "properties": {
+                    "Reference": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "$ref": "#/definitions/TypeInstantiation"
+                        }
+                      ],
+                      "maxItems": 2,
+                      "minItems": 2
+                    }
+                  },
+                  "additionalProperties": false
                 }
               ]
             }
@@ -3254,6 +3430,28 @@
                           }
                         },
                         "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "Reference"
+                        ],
+                        "properties": {
+                          "Reference": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "$ref": "#/definitions/TypeInstantiation"
+                              }
+                            ],
+                            "maxItems": 2,
+                            "minItems": 2
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     ]
                   }
@@ -3405,6 +3603,28 @@
                         "type": "integer",
                         "format": "uint",
                         "minimum": 0.0
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "Reference"
+                    ],
+                    "properties": {
+                      "Reference": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "$ref": "#/definitions/TypeInstantiation"
+                          }
+                        ],
+                        "maxItems": 2,
+                        "minItems": 2
                       }
                     },
                     "additionalProperties": false
@@ -3572,6 +3792,28 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "Reference"
+                  ],
+                  "properties": {
+                    "Reference": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "$ref": "#/definitions/TypeInstantiation"
+                        }
+                      ],
+                      "maxItems": 2,
+                      "minItems": 2
+                    }
+                  },
+                  "additionalProperties": false
                 }
               ]
             }
@@ -3683,6 +3925,28 @@
                           }
                         },
                         "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "Reference"
+                        ],
+                        "properties": {
+                          "Reference": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "$ref": "#/definitions/TypeInstantiation"
+                              }
+                            ],
+                            "maxItems": 2,
+                            "minItems": 2
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     ]
                   }
@@ -3766,6 +4030,28 @@
                             "type": "integer",
                             "format": "uint",
                             "minimum": 0.0
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "Reference"
+                        ],
+                        "properties": {
+                          "Reference": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "$ref": "#/definitions/TypeInstantiation"
+                              }
+                            ],
+                            "maxItems": 2,
+                            "minItems": 2
                           }
                         },
                         "additionalProperties": false
@@ -3888,6 +4174,28 @@
                       "type": "integer",
                       "format": "uint",
                       "minimum": 0.0
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "Reference"
+                  ],
+                  "properties": {
+                    "Reference": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "$ref": "#/definitions/TypeInstantiation"
+                        }
+                      ],
+                      "maxItems": 2,
+                      "minItems": 2
                     }
                   },
                   "additionalProperties": false
@@ -4117,6 +4425,28 @@
                                 }
                               },
                               "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "required": [
+                                "Reference"
+                              ],
+                              "properties": {
+                                "Reference": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "$ref": "#/definitions/TypeInstantiation"
+                                    }
+                                  ],
+                                  "maxItems": 2,
+                                  "minItems": 2
+                                }
+                              },
+                              "additionalProperties": false
                             }
                           ]
                         }
@@ -4268,6 +4598,28 @@
                               "type": "integer",
                               "format": "uint",
                               "minimum": 0.0
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "Reference"
+                          ],
+                          "properties": {
+                            "Reference": {
+                              "type": "array",
+                              "items": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "$ref": "#/definitions/TypeInstantiation"
+                                }
+                              ],
+                              "maxItems": 2,
+                              "minItems": 2
                             }
                           },
                           "additionalProperties": false
@@ -4453,6 +4805,28 @@
                                 }
                               },
                               "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "required": [
+                                "Reference"
+                              ],
+                              "properties": {
+                                "Reference": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "$ref": "#/definitions/TypeInstantiation"
+                                    }
+                                  ],
+                                  "maxItems": 2,
+                                  "minItems": 2
+                                }
+                              },
+                              "additionalProperties": false
                             }
                           ]
                         }
@@ -4629,6 +5003,28 @@
                       "type": "integer",
                       "format": "uint",
                       "minimum": 0.0
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "Reference"
+                  ],
+                  "properties": {
+                    "Reference": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "$ref": "#/definitions/TypeInstantiation"
+                        }
+                      ],
+                      "maxItems": 2,
+                      "minItems": 2
                     }
                   },
                   "additionalProperties": false
